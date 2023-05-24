@@ -2,10 +2,10 @@ require("dotenv").config();
 
 module.exports = {
   development: {
-    username: "root",
-    password: "123456789",
-    database: "ecommerce",
-    host: "127.0.0.1",
+    username: MYSQL_ADDON_USER,
+    password: MYSQL_ADDON_PASSWORD,
+    database: MYSQL_ADDON_DB,
+    host: MYSQL_ADDON_HOST,
     dialect: "mysql",
   },
   test: {
