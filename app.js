@@ -21,6 +21,7 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Methods",
     "GET,HEAD,OPTIONS,POST,PUT,PATCH"
   );
+  res.setHeader("content-type", "text/json/multipart/form-data");
   res.setHeader(
     "Access-Control-Allow-Headers",
     "Access-Control-Allow-Headers, Origin,Accept, x-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-access-token"
