@@ -1,6 +1,7 @@
 "use strict";
 const { Model } = require("sequelize");
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
+const argon2 = require("argon2");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -43,10 +44,17 @@ module.exports = (sequelize, DataTypes) => {
   );
   /* this beforeCreate is a simple function known as a hook, will be running
  everytime before creating the user object in user table */
-  User.beforeCreate((user) => {
-    const salt = bcrypt.genSaltSync(10);
-    let hashedPassword = bcrypt.hashSync(user.password, salt);
-    user.password = hashedPassword; //this line will replace user's actual password with hashed password
+  User.beforeCreate(async (user) => {
+    // const salt = bcrypt.genSaltSync(10);
+    // let hashedPassword = bcrypt.hashSync(user.password, salt);
+    // user.password = hashedPassword; //this line will replace user's actual password with hashed password
+    try {
+      const hash = await argon2.hash(user.password);
+      user.password = hash; //this line will replace user's actual password with hashed password
+    } catch (err) {
+      console.log(err);
+      return;
+    }
   });
 
   return User;

@@ -1,5 +1,6 @@
 const { User, Role } = require("../models/index");
-const bcrypt = require("bcryptjs");
+// const bcrypt = require("bcryptjs");
+const argon2 = require("argon2");
 const jwt = require("jsonwebtoken");
 const roleService = require("./role.services");
 
@@ -35,9 +36,20 @@ const getuserbyId = async (id) => {
   return response;
 };
 
-const verifyPassword = (pass, hashPass) => {
-  const response = bcrypt.compareSync(pass, hashPass);
-  return response;
+const verifyPassword = async (pass, hashPass) => {
+  // const response = bcrypt.compareSync(pass, hashPass);
+  // return response;
+  try {
+    if (await argon2.verify(hashPass, pass)) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    console.log(err);
+    return;
+    // internal failure
+  }
 };
 
 const verifyToken = (token) => {
