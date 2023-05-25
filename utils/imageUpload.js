@@ -17,9 +17,9 @@ const upload = multer({
     console.log(req, file, "==========ffffffffffffffff=========");
     const fileTypes = /jpeg|jpg|png|gif|JPEG|JPG|PNG|GIF/;
     const mimeType = fileTypes.test(file.mimetype);
-    const extname = fileTypes.test(path.extname(file.originalname));
+    // const extname = fileTypes.test(path.extname(file.originalname));
 
-    if (mimeType && extname) {
+    if (mimeType) {
       return cb(null, true);
     }
     cb("Give proper files formate to upload");
