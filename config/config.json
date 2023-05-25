@@ -1,8 +1,8 @@
 {
   "development": {
     "username": "root",
-    "password": "123456789",
-    "database": "ecommerce",
+    "password": null,
+    "database": "database_test",
     "host": "127.0.0.1",
     "dialect": "mysql"
   },
