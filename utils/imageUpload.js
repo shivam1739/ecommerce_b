@@ -6,7 +6,7 @@ const storage = multer.diskStorage({
     cb(null, "Images");
   },
   filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
+    cb(null, file.originalname);
   },
 });
 
@@ -17,9 +17,9 @@ const upload = multer({
     console.log(req, file, "==========ffffffffffffffff=========");
     const fileTypes = /jpeg|jpg|png|gif|JPEG|JPG|PNG|GIF/;
     const mimeType = fileTypes.test(file.mimetype);
-    // const extname = fileTypes.test(path.extname(file.originalname));
+    const extname = fileTypes.test(path.extname(file.originalname));
 
-    if (mimeType) {
+    if (mimeType && extname) {
       return cb(null, true);
     }
     cb("Give proper files formate to upload");
