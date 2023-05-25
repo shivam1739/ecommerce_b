@@ -14,20 +14,20 @@ app.use("/Images", express.static("./Images"));
 app.use(express.json());
 
 app.use(cors());
-app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET,HEAD,OPTIONS,POST,PUT,PATCH"
-  );
-  res.setHeader("content-type", "text/json/multipart/form-data");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Access-Control-Allow-Headers, Origin,Accept, x-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-access-token"
-  );
-  next();
-});
+// app.use(function (req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Credentials", "true");
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "GET,HEAD,OPTIONS,POST,PUT,PATCH"
+//   );
+//   res.setHeader("content-type", "text/json/multipart/form-data");
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Access-Control-Allow-Headers, Origin,Accept, x-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers, x-access-token"
+//   );
+//   next();
+// });
 app.use(bodyParser.urlencoded({ extended: true }));
 
 categoryRoute(app);
