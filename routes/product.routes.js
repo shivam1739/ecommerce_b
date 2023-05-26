@@ -1,6 +1,8 @@
 const ProductController = require("../controller/product.controller");
 const AuthenticationMiddelware = require("../middelWare/authenctication.validators");
-const imageUpload = require("../utils/imageUpload");
+const imageUploadMiddleware = require("../utils/imageUploadMiddleware");
+const uploadImageMiddleware = require("../utils/imageUploadMiddleware");
+
 const routes = (app) => {
   app.get("/ecomm/api/v1/products", ProductController.getProducts);
   app.get(
@@ -15,12 +17,14 @@ const routes = (app) => {
   app.post(
     "/ecomm/api/v1/products",
     AuthenticationMiddelware.isAuthenticated,
+    imageUploadMiddleware,
     ProductController.addProduct
   );
   app.get("/ecomm/api/v1/products/:id", ProductController.getProductById);
   app.put(
     "/ecomm/api/v1/products/:id",
     AuthenticationMiddelware.isAuthenticated,
+    imageUploadMiddleware,
     ProductController.updateProductById
   );
   app.delete(
