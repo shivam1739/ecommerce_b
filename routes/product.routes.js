@@ -15,14 +15,12 @@ const routes = (app) => {
   app.post(
     "/ecomm/api/v1/products",
     AuthenticationMiddelware.isAuthenticated,
-    imageUpload.upload,
     ProductController.addProduct
   );
   app.get("/ecomm/api/v1/products/:id", ProductController.getProductById);
   app.put(
     "/ecomm/api/v1/products/:id",
     AuthenticationMiddelware.isAuthenticated,
-    imageUpload.upload,
     ProductController.updateProductById
   );
   app.delete(

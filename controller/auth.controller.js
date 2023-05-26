@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const signup = async (req, res) => {
   /* route for signup */
-  console.log(req.body, "================");
+  // console.log(req.body "================");
   try {
     // if (req.params.userType == "admin") {
     //   res.status(401).json({
@@ -12,7 +12,7 @@ const signup = async (req, res) => {
     // }
     const response = await authServices.signup(
       req.body,
-      req.file.path,
+      req.imageUrl,
       req.params.userType
     );
     return res.status(201).json({

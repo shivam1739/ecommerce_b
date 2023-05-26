@@ -1,10 +1,10 @@
 const authController = require("../controller/auth.controller");
-const imageUpload = require("../utils/imageUpload");
+const uploadImageMiddleware = require("../utils/imageUploadMiddleware");
 
 const routes = (app) => {
   app.post(
     "/ecomm/api/v1/signup/:userType",
-    imageUpload.upload,
+    uploadImageMiddleware,
     authController.signup
   );
   app.post("/ecomm/api/v1/signin", authController.signin);

@@ -7,7 +7,6 @@ const routes = (app) => {
 
   app.post(
     "/ecomm/api/v1/categories",
-    imageUpload.upload,
     CategoryMiddelware.validateCreate,
     AuthenticationMiddelware.isAuthenticated,
     CategoryController.createCategory
@@ -25,7 +24,7 @@ const routes = (app) => {
     "/ecomm/api/v1/categories/:id",
     CategoryMiddelware.validateCreate,
     AuthenticationMiddelware.isAuthenticated,
-    imageUpload.upload,
+
     CategoryController.updateCategory
   );
 
