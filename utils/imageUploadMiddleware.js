@@ -17,6 +17,16 @@ const storage = getStorage();
 // Setting up multer as a middleware to grab photo uploads
 const upload = multer({ storage: multer.memoryStorage() });
 
+const giveCurrentDateTime = () => {
+  const today = new Date();
+  const date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+  const time =
+    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  const dateTime = date + " " + time;
+  return dateTime;
+};
+
 const imageUploadMiddleware = (req, res, next) => {
   upload.single("image")(req, res, async () => {
     try {
@@ -24,7 +34,7 @@ const imageUploadMiddleware = (req, res, next) => {
 
       const storageRef = ref(
         storage,
-        `files/${req.file.originalname + "       " + dateTime}`
+        `files/${dateTime + "_" + req.file.originalname}`
       );
 
       // Create file metadata including the content type
@@ -50,16 +60,6 @@ const imageUploadMiddleware = (req, res, next) => {
       return res.status(400).send(error.message);
     }
   });
-};
-
-const giveCurrentDateTime = () => {
-  const today = new Date();
-  const date =
-    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
-  const time =
-    today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  const dateTime = date + " " + time;
-  return dateTime;
 };
 
 module.exports = imageUploadMiddleware;

@@ -1,7 +1,6 @@
 const ProductController = require("../controller/product.controller");
 const AuthenticationMiddelware = require("../middelWare/authenctication.validators");
 const imageUploadMiddleware = require("../utils/imageUploadMiddleware");
-const uploadImageMiddleware = require("../utils/imageUploadMiddleware");
 
 const routes = (app) => {
   app.get("/ecomm/api/v1/products", ProductController.getProducts);
