@@ -12,10 +12,7 @@ const getCategories = async (req, res) => {
 
 const createCategory = async (req, res) => {
   console.log(req.body, "========================", req.file);
-  const response = await CategoryService.createNewCategory(
-    req.body,
-    req.file.path
-  );
+  const response = await CategoryService.createNewCategory(req.body);
 
   return res.json({
     message: "successfully create the category",
@@ -47,8 +44,7 @@ const getCategoriesByName = async (req, res) => {
 const updateCategory = async (req, res) => {
   const response = await CategoryService.updateCategory(
     req.params.id,
-    req.body,
-    req.file.path
+    req.body
   );
   return res.json({
     message: "successfull update category ",

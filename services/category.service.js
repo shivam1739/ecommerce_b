@@ -9,7 +9,7 @@ const createNewCategory = async (data, img) => {
   console.log("=========================================");
   const newCategory = await Category.create({
     name: data.name,
-    image: img,
+    image: data.image,
     describtion: data.describtion,
   });
   return newCategory;
@@ -39,7 +39,7 @@ const updateCategory = async (idData, body, img) => {
     {
       name: body.name,
       describtion: body.describtion,
-      image: img,
+      image: body.image,
     },
     {
       where: {

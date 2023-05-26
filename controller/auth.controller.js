@@ -1,20 +1,18 @@
 const authServices = require("../services/auth.services");
 const jwt = require("jsonwebtoken");
+const roleService = require("../services/role.services");
 require("dotenv").config();
 const signup = async (req, res) => {
   /* route for signup */
-  // console.log(req.body "================");
+  console.log(req.body, "================");
   try {
     // if (req.params.userType == "admin") {
     //   res.status(401).json({
     //     message: "you are not authorizesd person please contact with adimn",
     //   });
     // }
-    const response = await authServices.signup(
-      req.body,
-      req.imageUrl,
-      req.params.userType
-    );
+    const response = await authServices.signup(req.body, req.params.userType);
+
     return res.status(201).json({
       message: "succsessfull signup",
       success: true,

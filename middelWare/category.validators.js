@@ -1,6 +1,6 @@
 const validateCreate = (req, res, next) => {
-  console.log(req.body);
-  if (!req.body.name) {
+  console.log(req.body, "=============");
+  if (!req.body) {
     return res.status(400).json({
       message:
         "Category name is missing, please try again by adding a category name",

@@ -3,12 +3,12 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const roleService = require("./role.services");
 
-const signup = async (body, img, usertType) => {
+const signup = async (body, usertType) => {
   const signupResponse = await User.create({
     email: body.email,
     password: body.password,
     username: body.username,
-    image: img,
+    image: body.image,
   });
   const role = await roleService.getRoleByName(usertType);
   await signupResponse.addRole(role);
@@ -20,6 +20,7 @@ const getuserbyEmail = async (emailData) => {
     where: {
       email: emailData,
     },
+    include: Role,
   });
 
   return response;

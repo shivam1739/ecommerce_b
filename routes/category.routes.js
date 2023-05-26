@@ -1,42 +1,42 @@
-const CategoryController = require("../controller/category.controller");
-const CategoryMiddelware = require("../middelWare/category.validators");
-const AuthenticationMiddelware = require("../middelWare/authenctication.validators");
-const uploadImageMiddleware = require("../utils/imageUploadMiddleware");
+const categoryController = require("../controller/category.controller");
+const categoryMiddelware = require("../middelWare/category.validators");
+const authenticationMiddelware = require("../middelWare/authenctication.validators");
 const imageUploadMiddleware = require("../utils/imageUploadMiddleware");
-
+const authorizationMiddleware = require("../middelWare/authorization.middleware");
 const routes = (app) => {
-  app.get("/ecomm/api/v1/categories", CategoryController.getCategories);
+  app.get("/ecomm/api/v1/categories", categoryController.getCategories);
 
   app.post(
     "/ecomm/api/v1/categories",
-    CategoryMiddelware.validateCreate,
-    AuthenticationMiddelware.isAuthenticated,
+    authenticationMiddelware.isAuthenticated,
+    authorizationMiddleware.isAdmin,
     imageUploadMiddleware,
-    CategoryController.createCategory
+    categoryMiddelware.validateCreate,
+    categoryController.createCategory
   );
-  app.get("/ecomm/api/v1/categories/:id", CategoryController.getCategoriesById);
+  app.get("/ecomm/api/v1/categories/:id", categoryController.getCategoriesById);
   /* to get all categories by name */
 
   app.get(
     "/ecomm/api/v1/categoriesByName/",
-    CategoryController.getCategoriesByName
+    categoryController.getCategoriesByName
   );
 
   /* to update the category by given id */
   app.put(
     "/ecomm/api/v1/categories/:id",
-    CategoryMiddelware.validateCreate,
-    AuthenticationMiddelware.isAuthenticated,
+    categoryMiddelware.validateCreate,
+    authenticationMiddelware.isAuthenticated,
     imageUploadMiddleware,
-    CategoryController.updateCategory
+    categoryController.updateCategory
   );
 
   /* to delete a category by id*/
   app.delete(
     "/ecomm/api/v1/categories/:id",
-    CategoryMiddelware.validateCreate,
-    AuthenticationMiddelware.isAuthenticated,
-    CategoryController.deleteCategory
+    categoryMiddelware.validateCreate,
+    authenticationMiddelware.isAuthenticated,
+    categoryController.deleteCategory
   );
 };
 

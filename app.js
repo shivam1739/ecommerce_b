@@ -10,7 +10,6 @@ const port = process.env.PORT || 8000;
 console.log(port);
 const app = express();
 
-app.use("/Images", express.static("./Images"));
 app.use(express.json());
 
 app.use(cors());

@@ -29,6 +29,7 @@ const giveCurrentDateTime = () => {
 
 const imageUploadMiddleware = (req, res, next) => {
   upload.single("image")(req, res, async () => {
+    console.log(req.body);
     try {
       const dateTime = giveCurrentDateTime();
 
@@ -54,9 +55,10 @@ const imageUploadMiddleware = (req, res, next) => {
       const downloadURL = await getDownloadURL(snapshot.ref);
 
       console.log("File successfully uploaded.", downloadURL);
-      req.imageUrl = downloadURL;
+      req.body.image = downloadURL;
       next();
     } catch (error) {
+      console.log(error);
       return res.status(400).send(error.message);
     }
   });
