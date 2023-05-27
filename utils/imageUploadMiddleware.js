@@ -29,34 +29,40 @@ const giveCurrentDateTime = () => {
 
 const imageUploadMiddleware = (req, res, next) => {
   upload.single("image")(req, res, async () => {
-    console.log(req.body);
     try {
-      const dateTime = giveCurrentDateTime();
+      const file = req.file;
+      console.log(file, "file");
+      if (!file) {
+        req.body.image = "";
+        next();
+      } else {
+        const dateTime = giveCurrentDateTime();
 
-      const storageRef = ref(
-        storage,
-        `files/${dateTime + "_" + req.file.originalname}`
-      );
+        const storageRef = ref(
+          storage,
+          `files/${dateTime + "_" + req.file.originalname}`
+        );
 
-      // Create file metadata including the content type
-      const metadata = {
-        contentType: req.file.mimetype,
-      };
+        // Create file metadata including the content type
+        const metadata = {
+          contentType: req.file.mimetype,
+        };
 
-      // Upload the file in the bucket storage
-      const snapshot = await uploadBytesResumable(
-        storageRef,
-        req.file.buffer,
-        metadata
-      );
-      //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
+        // Upload the file in the bucket storage
+        const snapshot = await uploadBytesResumable(
+          storageRef,
+          req.file.buffer,
+          metadata
+        );
+        //by using uploadBytesResumable we can control the progress of uploading like pause, resume, cancel
 
-      // Grab the public url
-      const downloadURL = await getDownloadURL(snapshot.ref);
+        // Grab the public url
+        const downloadURL = await getDownloadURL(snapshot.ref);
 
-      console.log("File successfully uploaded.", downloadURL);
-      req.body.image = downloadURL;
-      next();
+        console.log("File successfully uploaded.", downloadURL);
+        req.body.image = downloadURL;
+        next();
+      }
     } catch (error) {
       console.log(error);
       return res.status(400).send(error.message);
