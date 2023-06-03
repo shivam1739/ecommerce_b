@@ -2,7 +2,7 @@ const { Product, Category } = require("../models/index");
 const { Op } = require("sequelize");
 
 const getAllProducts = async () => {
-  const getAllProductResponse = await Product.findAll({ include: Category });
+  const getAllProductResponse = await Product.findAll();
 
   return getAllProductResponse;
 };
