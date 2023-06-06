@@ -1,5 +1,5 @@
 const { Product, Category } = require("../models/index");
-const { Op } = require("sequelize");
+const { Op, where } = require("sequelize");
 
 const getAllProducts = async () => {
   const getAllProductResponse = await Product.findAll();
@@ -7,12 +7,23 @@ const getAllProducts = async () => {
   return getAllProductResponse;
 };
 
-const addProduct = async (data) => {
+const getProductBySellerId = async (sellerId) => {
+  const products = await Product.findAll({
+    where: { sellerId: sellerId },
+    attributes: {
+      exclude: ["sellerId"], // Exclude the sellerId field from the returned data
+    },
+  });
+  return products;
+};
+
+const addProduct = async (data, user) => {
   const addProductResponse = await Product.create({
     name: data.name,
     describtion: data.describtion,
     cost: data.cost,
     image: data.image,
+    sellerId: user.id,
     category_id: data.category_id,
   });
   return addProductResponse;
@@ -95,4 +106,5 @@ module.exports = {
   getProductsbyname,
   getProductsByCostRange,
   getProductByCategoryId,
+  getProductBySellerId,
 };

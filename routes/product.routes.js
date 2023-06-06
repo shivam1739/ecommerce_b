@@ -13,6 +13,10 @@ const routes = (app) => {
     "/ecomm/api/v1/products/:category",
     ProductController.getProductByCategoryId
   );
+  app.get(
+    "/ecomm/api/v1/:sellerId/products",
+    ProductController.getProductBySellerId
+  );
   app.post(
     "/ecomm/api/v1/products",
     AuthenticationMiddelware.isAuthenticated,

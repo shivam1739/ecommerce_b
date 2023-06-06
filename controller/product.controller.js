@@ -11,7 +11,7 @@ const getProducts = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  const response = await ProductsServices.addProduct(req.body);
+  const response = await ProductsServices.addProduct(req.body, req.user);
   return res.json({
     message: "successfully add product",
     sucess: true,
@@ -26,6 +26,17 @@ const getProductById = async (req, res) => {
     sucess: true,
     code: 200,
     data: response,
+  });
+};
+
+const getProductBySellerId = async (req, res) => {
+  const response = await ProductsServices.getProductBySellerId(
+    req.params.sellerId
+  );
+  return res.status(200).send({
+    message: "successfully fetch product",
+    response: response,
+    success: true,
   });
 };
 
@@ -90,4 +101,5 @@ module.exports = {
   getProductsbyname,
   getProductsByCostRange,
   getProductByCategoryId,
+  getProductBySellerId,
 };
