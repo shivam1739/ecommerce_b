@@ -14,6 +14,11 @@ module.exports = (sequelize, DataTypes) => {
           name: "category_id",
         },
       });
+      this.belongsTo(models.User, {
+        foreignKey: {
+          name: "sellerId",
+        },
+      });
     }
   }
   Product.init(
@@ -23,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.STRING,
       cost: DataTypes.INTEGER,
       category_id: DataTypes.INTEGER,
+      sellerId: DataTypes.INTEGER,
     },
     {
       sequelize,

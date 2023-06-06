@@ -1,4 +1,7 @@
 "use strict";
+
+const { INTEGER } = require("sequelize/types");
+
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("Product", {
@@ -6,6 +9,10 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
+        type: Sequelize.INTEGER,
+      },
+      sellerId: {
+        allowNull: false,
         type: Sequelize.INTEGER,
       },
       name: {
