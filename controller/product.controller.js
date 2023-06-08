@@ -1,5 +1,6 @@
 const ProductsServices = require("../services/product.service");
-
+const { PRODUCT_STATUS } = require("../constants/product.constants");
+const imageDelete = require("../utils/imageDelete");
 const getProducts = async (req, res) => {
   const response = await ProductsServices.getAllProducts();
   return res.json({
@@ -11,6 +12,13 @@ const getProducts = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
+  const validStatus = PRODUCT_STATUS.includes(req.body.status);
+  if (!validStatus) {
+    await imageDelete(req, res);
+    return res
+      .status(400)
+      .send({ message: "please provide valid status ex: " + PRODUCT_STATUS });
+  }
   const response = await ProductsServices.addProduct(req.body, req.user);
   return res.json({
     message: "successfully add product",

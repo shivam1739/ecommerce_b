@@ -20,6 +20,7 @@ const routes = (app) => {
   app.post(
     "/ecomm/api/v1/products",
     AuthenticationMiddelware.isAuthenticated,
+    
     imageUploadMiddleware,
     ProductController.addProduct
   );

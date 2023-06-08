@@ -1,4 +1,5 @@
 const { Product, Category } = require("../models/index");
+
 const { Op, where } = require("sequelize");
 
 const getAllProducts = async () => {
@@ -18,15 +19,22 @@ const getProductBySellerId = async (sellerId) => {
 };
 
 const addProduct = async (data, user) => {
-  const addProductResponse = await Product.create({
-    name: data.name,
-    describtion: data.describtion,
-    cost: data.cost,
-    image: data.image,
-    sellerId: user.id,
-    category_id: data.category_id,
-  });
-  return addProductResponse;
+  try {
+    const addProductResponse = await Product.create({
+      name: data.name,
+      describtion: data.describtion,
+      cost: data.cost,
+      image: data.image,
+      stock: data.stock,
+      status: data.status,
+      sellerId: user.id,
+      category_id: data.category_id,
+    });
+    return addProductResponse;
+  } catch (err) {
+    console.log(err.message);
+    return err;
+  }
 };
 
 const getProductById = async (IdParam) => {
