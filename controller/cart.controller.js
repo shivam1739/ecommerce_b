@@ -1,11 +1,11 @@
 const { STATUS } = require("../config/constant");
-const orderService = require("../services/order.service");
+const cartService = require("../services/cart.service");
 const addProduct = async (req, res) => {
-  let cart = await orderService.getCartByUser(req.user, STATUS.CREATION);
+  let cart = await cartService.getCartByUser(req.user, STATUS.CREATION);
   if (!cart) {
-    cart = await orderService.createCart(req.user);
+    cart = await cartService.createCart(req.user);
   }
-  let responce = await orderService.addProductToCart(
+  let responce = await cartService.addProductToCart(
     cart.id,
     req.body.productId
   );
@@ -26,7 +26,7 @@ const addProduct = async (req, res) => {
 };
 
 const removeProduct = async (req, res) => {
-  let cart = await orderService.getCartByUser(req.user, STATUS.CREATION);
+  let cart = await cartService.getCartByUser(req.user, STATUS.CREATION);
   if (!cart) {
     return res.json({
       status: 400,
@@ -34,7 +34,7 @@ const removeProduct = async (req, res) => {
       message: "No order for current user",
     });
   }
-  const response = await orderService.removedProductToCart(
+  const response = await cartService.removedProductToCart(
     req.body.productId,
     cart.id
   );

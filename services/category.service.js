@@ -10,13 +10,13 @@ const createNewCategory = async (data, img) => {
   const newCategory = await Category.create({
     name: data.name,
     image: data.image,
-    describtion: data.describtion,
+    description: data.description,
   });
   return newCategory;
 };
 
 const getCategoriesById = async (Id_data) => {
-  const categoriesById = Category.findAll({
+  const categoriesById = Category.findOne({
     where: {
       id: Id_data,
     },

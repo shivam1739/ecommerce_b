@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
   Product.init(
     {
       name: DataTypes.STRING,
-      describtion: DataTypes.STRING,
+      description: DataTypes.TEXT,
       image: DataTypes.STRING,
       stock: DataTypes.INTEGER,
       status: DataTypes.ENUM("published", "unPublished", "otuOfStock"),

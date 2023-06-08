@@ -22,8 +22,8 @@ module.exports = {
       image: {
         type: Sequelize.STRING,
       },
-      describtion: {
-        type: Sequelize.STRING,
+      description: {
+        type: Sequelize.TEXT,
       },
       status: {
         type: Sequelize.ENUM("published", "unPublished", "otuOfStock"),

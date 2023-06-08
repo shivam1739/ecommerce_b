@@ -22,7 +22,7 @@ const addProduct = async (data, user) => {
   try {
     const addProductResponse = await Product.create({
       name: data.name,
-      describtion: data.describtion,
+      description: data.description,
       cost: data.cost,
       image: data.image,
       stock: data.stock,
@@ -38,7 +38,7 @@ const addProduct = async (data, user) => {
 };
 
 const getProductById = async (IdParam) => {
-  const getProductByIdResponse = await Product.findAll({
+  const getProductByIdResponse = await Product.findOne({
     where: {
       id: IdParam,
     },

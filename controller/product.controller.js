@@ -14,7 +14,7 @@ const getProducts = async (req, res) => {
 const addProduct = async (req, res) => {
   const validStatus = PRODUCT_STATUS.includes(req.body.status);
   if (!validStatus) {
-    await imageDelete(req, res);
+    await imageDelete(req.body.image);
     return res
       .status(400)
       .send({ message: "please provide valid status ex: " + PRODUCT_STATUS });
@@ -49,13 +49,31 @@ const getProductBySellerId = async (req, res) => {
 };
 
 const deleteProducrtById = async (req, res) => {
-  const response = await ProductsServices.deleteProducrtById(req.params.id);
-  return res.json({
-    message: "successfully delete product",
-    sucess: true,
-    code: 200,
-    data: response,
-  });
+  try {
+    const response = {};
+    var statusCode;
+    const product = await ProductsServices.getProductById(req.params.id);
+
+    if (!product) {
+      response.message = "product not found";
+      statusCode = 404;
+    } else if (product.sellerId !== req.user.id) {
+      console.log(product.sellerId, req.user.id, "=========");
+      response.message = "not authorised";
+      statusCode = 401;
+    } else {
+      const result = await ProductsServices.deleteProducrtById(req.params.id);
+
+      await imageDelete(product.image);
+      statusCode = 200;
+      response.message = "product successfully deleted";
+    }
+    console.log(response);
+    return res.status(statusCode).send(response);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: err.message });
+  }
 };
 const updateProductById = async (req, res) => {
   const response = await ProductsServices.updateProductById(

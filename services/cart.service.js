@@ -1,10 +1,9 @@
-const e = require("express");
 const { STATUS } = require("../config/constant");
-const { Order, Product, Order_Product } = require("../models/index");
+const { Cart, Product, Cart_Product } = require("../models/index");
 
 const getCartByUser = async (user, STATUS) => {
   try {
-    let cart = await Order.findOne({
+    let cart = await Cart.findOne({
       where: {
         userId: user.id,
         status: STATUS,
@@ -16,15 +15,15 @@ const getCartByUser = async (user, STATUS) => {
   }
 };
 const createCart = async (user) => {
-  let cart = await Order.create({
+  let cart = await Cart.create({
     userId: user.id,
     status: STATUS.CREATION,
   });
   return cart;
 };
 
-const addProductToCart = async (orderId, productId) => {
-  let cart = await Order.findByPk(orderId);
+const addProductToCart = async (cartId, productId) => {
+  let cart = await Cart.findByPk(cartId);
   if (cart.status !== STATUS.CREATION) {
     return { error: "order cannot be modified" };
   }
@@ -35,9 +34,9 @@ const addProductToCart = async (orderId, productId) => {
       error: "No such product found",
     };
   }
-  const entry = await Order_Product.findOne({
+  const entry = await Cart_Product.findOne({
     where: {
-      orderId: orderId,
+      cartId: cartId,
       productId: productId,
     },
   });
@@ -57,9 +56,9 @@ const addProductToCart = async (orderId, productId) => {
 
   return entry;
 };
-const removedProductToCart = async (orderId, productId) => {
+const removedProductToCart = async (cartId, productId) => {
   try {
-    const cart = await Order.findByPk(orderId);
+    const cart = await Cart.findByPk(cartId);
     if (cart.status !== STATUS.CREATION) {
       return {
         error: "Order cannot be modified",
@@ -72,9 +71,9 @@ const removedProductToCart = async (orderId, productId) => {
         error: "No such product found",
       };
     }
-    const entry = await Order_Product.findOne({
+    const entry = await Cart_Product.findOne({
       where: {
-        orderId: orderId,
+        cartId: cartId,
         productId: product.id,
       },
     });

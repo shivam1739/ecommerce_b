@@ -49,8 +49,7 @@ const signin = async (req, res) => {
       password: userData.password,
       username: userData.username,
     },
-    process.env.JWT_SECRET_KEY,
-    { expiresIn: "2h" }
+    process.env.JWT_SECRET_KEY
   );
   userData.password = undefined;
   return res.status(200).json({

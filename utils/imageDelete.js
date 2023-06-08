@@ -1,9 +1,16 @@
 const { getStorage, ref, deleteObject } = require("firebase/storage");
+const { initializeApp } = require("firebase/app");
+
+const config = require("../config/firebase.config");
+
+//Initialize a firebase application
+initializeApp(config.firebaseConfigure);
+
 const storage = getStorage();
 
-const imageDelete = async (req, res) => {
+const imageDelete = async (image) => {
   // Create a reference to the file to delete
-  const desertRef = ref(storage, req.body.image);
+  const desertRef = ref(storage, image);
 
   // Delete the file
   deleteObject(desertRef)

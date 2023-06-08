@@ -36,6 +36,7 @@ const routes = (app) => {
     "/ecomm/api/v1/categories/:id",
     categoryMiddelware.validateCreate,
     authenticationMiddelware.isAuthenticated,
+    authorizationMiddleware.isAdmin,
     categoryController.deleteCategory
   );
 };

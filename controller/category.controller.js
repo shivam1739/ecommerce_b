@@ -1,4 +1,6 @@
 const CategoryService = require("../services/category.service");
+const imageDelete = require("../utils/imageDelete");
+
 const getCategories = async (req, res) => {
   const allCategoriesData = await CategoryService.getAllCategories();
   return res.json({
@@ -55,12 +57,24 @@ const updateCategory = async (req, res) => {
 };
 
 const deleteCategory = async (req, res) => {
-  const response = await CategoryService.deleteCategory(req.params.id);
-  return res.json({
-    message: "successfull delet data ",
-    code: 200,
-    data: response,
-  });
+  try {
+    const response = {};
+    var statusCode;
+    const category = await CategoryService.getCategoriesById(req.params.id);
+    if (!category) {
+      response.message = "category not found";
+      statusCode = 404;
+    } else {
+      const result = await CategoryService.deleteCategory(req.params.id);
+      await imageDelete(category.image);
+      response.message = "successfully deleted";
+      statusCode = 200;
+    }
+    res.status(statusCode).send(response);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send({ error: err.message });
+  }
 };
 
 module.exports = {
