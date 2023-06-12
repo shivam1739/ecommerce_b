@@ -34,25 +34,26 @@ const addProductToCart = async (cartId, productId) => {
       error: "No such product found",
     };
   }
-  const entry = await Cart_Product.findOne({
+  let entry = await Cart_Product.findOne({
     where: {
       cartId: cartId,
       productId: productId,
     },
   });
+  console.log(entry, "=================");
+  // if (!entry) {
+  //   return {
+  //     error: "No such product found in the order",
+  //   };
+  // } else {
   if (!entry) {
-    return {
-      error: "No such product found in the order",
-    };
+    entry = await cart.addProduct(productId, {
+      through: { quantity: 1 },
+    });
   } else {
-    if (entry.quantity <= 0) {
-      const entry = await cart.addProduct(productId, {
-        through: { quantity: 1 },
-      });
-    } else {
-      await entry.increment("quantity", { by: 1 });
-    }
+    await entry.increment("quantity", { by: 1 });
   }
+  // }
 
   return entry;
 };

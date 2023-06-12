@@ -3,6 +3,7 @@ require("dotenv").config();
 const { sequelize } = require("./models/index");
 const cors = require("cors");
 const categoryRoute = require("./routes/category.routes");
+const cartRoute = require("./routes/cart.routes");
 const productRoute = require("./routes/product.routes");
 const authRoute = require("./routes/auth.routes");
 const bodyParser = require("body-parser");
@@ -32,6 +33,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 categoryRoute(app);
 productRoute(app);
 authRoute(app);
+cartRoute(app);
 
 app.get("/", async (req, res) => {
   res.send("<h1>hellow<h1>");
