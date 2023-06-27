@@ -27,11 +27,9 @@ module.exports = {
       },
       status: {
         type: Sequelize.ENUM("published", "unPublished", "otuOfStock"),
-        defaultValue: "unPublished",
-        allowNull: true,
       },
       stock: {
-        type: Sequelize.STRING,
+        type: Sequelize.INTEGER,
         allowNull: false,
         defaultValue: 50,
       },

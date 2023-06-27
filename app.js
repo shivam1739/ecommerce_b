@@ -4,6 +4,7 @@ const { sequelize } = require("./models/index");
 const cors = require("cors");
 const categoryRoute = require("./routes/category.routes");
 const cartRoute = require("./routes/cart.routes");
+const orderRoute = require("./routes/order.routes");
 const productRoute = require("./routes/product.routes");
 const authRoute = require("./routes/auth.routes");
 const bodyParser = require("body-parser");
@@ -34,6 +35,7 @@ categoryRoute(app);
 productRoute(app);
 authRoute(app);
 cartRoute(app);
+orderRoute(app);
 
 app.get("/", async (req, res) => {
   res.send("<h1>hellow<h1>");

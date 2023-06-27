@@ -1,20 +1,26 @@
 "use strict";
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Carts", {
+    await queryInterface.createTable("Orders", {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      status: {
+      paymentId: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      delivery: {
-        type: Sequelize.DATEONLY,
+      deliveryStatus: {
+        type: Sequelize.ENUM(
+          "pending",
+          "in progress",
+          "out for delivery",
+          "delivered",
+          "cancelled"
+        ),
+        defaultValue: "pending",
       },
       userId: {
         type: Sequelize.INTEGER,
@@ -31,6 +37,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Carts");
+    await queryInterface.dropTable("Orders");
   },
 };

@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
           name: "category_id",
         },
       });
+
       this.belongsTo(models.User, {
         foreignKey: {
           name: "sellerId",
@@ -26,8 +27,15 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       description: DataTypes.TEXT,
       image: DataTypes.STRING,
-      stock: DataTypes.INTEGER,
-      status: DataTypes.ENUM("published", "unPublished", "otuOfStock"),
+
+      stock: {
+        type: DataTypes.INTEGER,
+        defaultValue: 50,
+      },
+      status: {
+        type: DataTypes.ENUM("published", "unPublished", "otuOfStock"),
+        defaultValue: "unPublished",
+      },
       cost: DataTypes.INTEGER,
       category_id: DataTypes.INTEGER,
       sellerId: DataTypes.INTEGER,

@@ -1,17 +1,18 @@
 const { STATUS } = require("../config/constant");
 const { Cart, Product, Cart_Product } = require("../models/index");
 
-const getCartByUser = async (user, STATUS) => {
+const getCartByUser = async (user) => {
   try {
     let cart = await Cart.findOne({
       where: {
         userId: user.id,
-        status: STATUS,
       },
+      include: Product,
     });
     return cart;
   } catch (err) {
     console.error(err);
+    return { error: err };
   }
 };
 const createCart = async (user) => {
@@ -33,6 +34,12 @@ const addProductToCart = async (cartId, productId) => {
     return {
       error: "No such product found",
     };
+  }
+  if (product.status != "published" && product.stock < 1) {
+    res.status(400).send({
+      message:
+        "error while adding product to the cart, either product is out of stock or product status is unPublished please wait for restok",
+    });
   }
   let entry = await Cart_Product.findOne({
     where: {

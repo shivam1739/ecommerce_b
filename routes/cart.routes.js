@@ -12,6 +12,11 @@ const routes = (app) => {
     AuthenticationMiddleWare.isAuthenticated,
     cartController.removeProduct
   );
+  app.get(
+    "/ecomm/api/v1/cart",
+    AuthenticationMiddleWare.isAuthenticated,
+    cartController.getCartByUserId
+  );
 };
 
 module.exports = routes;

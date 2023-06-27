@@ -12,13 +12,16 @@ const getProducts = async (req, res) => {
 };
 
 const addProduct = async (req, res) => {
-  const validStatus = PRODUCT_STATUS.includes(req.body.status);
-  if (!validStatus) {
-    await imageDelete(req.body.image);
-    return res
-      .status(400)
-      .send({ message: "please provide valid status ex: " + PRODUCT_STATUS });
+  if (req.body.status) {
+    const validStatus = PRODUCT_STATUS.includes(req.body.status);
+    if (!validStatus) {
+      await imageDelete(req.body.image);
+      return res
+        .status(400)
+        .send({ message: "please provide valid status ex: " + PRODUCT_STATUS });
+    }
   }
+
   const response = await ProductsServices.addProduct(req.body, req.user);
   return res.json({
     message: "successfully add product",

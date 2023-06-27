@@ -59,7 +59,25 @@ const removeProduct = async (req, res) => {
   });
 };
 
+const getCartByUserId = async (req, res) => {
+  const response = {};
+  let statusCode;
+
+  const result = await cartService.getCartByUser(req.user);
+
+  if (!result) {
+    response.message = "cart not found";
+    statusCode = 404;
+  } else {
+    response.message = "successfull fetched cart";
+    response.data = result;
+    statusCode = 200;
+  }
+  res.status(statusCode).send(response);
+};
+
 module.exports = {
   addProduct,
   removeProduct,
+  getCartByUserId,
 };
