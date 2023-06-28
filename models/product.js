@@ -33,7 +33,7 @@ module.exports = (sequelize, DataTypes) => {
         defaultValue: 50,
       },
       status: {
-        type: DataTypes.ENUM("published", "unPublished", "otuOfStock"),
+        type: DataTypes.ENUM("published", "unPublished", "outOfStock"),
         defaultValue: "unPublished",
       },
       cost: DataTypes.INTEGER,

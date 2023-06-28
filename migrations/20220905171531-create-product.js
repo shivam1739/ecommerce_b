@@ -26,7 +26,7 @@ module.exports = {
         type: Sequelize.TEXT,
       },
       status: {
-        type: Sequelize.ENUM("published", "unPublished", "otuOfStock"),
+        type: Sequelize.ENUM("published", "unPublished", "outOfStock"),
       },
       stock: {
         type: Sequelize.INTEGER,
